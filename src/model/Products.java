@@ -1,99 +1,53 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package model;
 
-import java.io.Serializable;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+/**
+ *
+ * @author tylershelter
+ */
+public class Products {
+    public Products(){}
+    public void delete(String masp){}
+    public void insert(String masp, String tensp, float gia){}
+    public void update(String masp, String tensp, float gia){}
+    public List<Product> showProduct(String tensp){
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=QLShop";
+            Connection conn = DriverManager.getConnection(url, "sa", "123456");
+            String sql = "SELECT * FROM Products";
+            if(tensp.length() > 0){
+                sql += " where Name like '%" + tensp + "%'";
+            }
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+            List<Product> list = new ArrayList<Product>();
+            while(rs.next()){
+                String code = rs.getString("Code");
+                String name = rs.getString("Name");
+                float price = rs.getFloat("Price");
+                String img = rs.getString("img");
+                Product sp = new Product(code, name, price, img);
+                list.add(sp);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 
-import org.hibernate.annotations.Entity;
-
-@Entity
-@Table(name="PRODUCTS")
-public class Products implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	@Id @GeneratedValue
-	@Column(name = "PRUDUCT_ID")
-	private int PRUDUCT_ID;
-	@Column(name = "PRODUCT_NAME")
-	private String PRODUCT_NAME;
-	@Column(name = "DESCRIPTION")
-	private String DESCRIPTION;
-	@Column(name = "PRICE")
-	private String PRICE;
-	@Column(name = "CATEGORY_ID")
-	private int CATEGORY_ID;
-	@Column(name = "TAIKHOAN")
-	private String TAIKHOAN;
-	
-	public Products() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Products(int pRUDUCT_ID, String pRODUCT_NAME, String dESCRIPTION, String pRICE, int cATEGORY_ID,
-			String tAIKHOAN) {
-		super();
-		PRUDUCT_ID = pRUDUCT_ID;
-		PRODUCT_NAME = pRODUCT_NAME;
-		DESCRIPTION = dESCRIPTION;
-		PRICE = pRICE;
-		CATEGORY_ID = cATEGORY_ID;
-		TAIKHOAN = tAIKHOAN;
-	}
-
-	public int getPRUDUCT_ID() {
-		return PRUDUCT_ID;
-	}
-
-	public void setPRUDUCT_ID(int pRUDUCT_ID) {
-		PRUDUCT_ID = pRUDUCT_ID;
-	}
-
-	public String getPRODUCT_NAME() {
-		return PRODUCT_NAME;
-	}
-
-	public void setPRODUCT_NAME(String pRODUCT_NAME) {
-		PRODUCT_NAME = pRODUCT_NAME;
-	}
-
-	public String getDESCRIPTION() {
-		return DESCRIPTION;
-	}
-
-	public void setDESCRIPTION(String dESCRIPTION) {
-		DESCRIPTION = dESCRIPTION;
-	}
-
-	public String getPRICE() {
-		return PRICE;
-	}
-
-	public void setPRICE(String pRICE) {
-		PRICE = pRICE;
-	}
-
-	public int getCATEGORY_ID() {
-		return CATEGORY_ID;
-	}
-
-	public void setCATEGORY_ID(int cATEGORY_ID) {
-		CATEGORY_ID = cATEGORY_ID;
-	}
-
-	public String getTAIKHOAN() {
-		return TAIKHOAN;
-	}
-
-	public void setTAIKHOAN(String tAIKHOAN) {
-		TAIKHOAN = tAIKHOAN;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	
 }

@@ -1,323 +1,100 @@
-<%@page import="model.Product"%>
-<%@page import="service.ProductDAO"%>
-<%@page import="model.Category"%>
-<%@page import= "java.util.List" %>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Trang chủ</title>
-<style>
-*{ margin:0; padding:0;}
-#tibber{
-	width:960px;
-	margin:0 auto;	
-}
-.menu{	
-	background-color:#c69a39;
-}
-.aaa{
-	position:relative;
-	top:10px;
-	left: 10px;
-	text-align:center;	
-}
-.tabmenu {
-	position:absolute;
-	top:10px;
-	right:165px;
-}
-.tabmenu a{
-	text-decoration:none;
-	color:#666;
-}
-.tabmenu a:hover{
-	text-decoration:underline;
-}
-.ii{
-	height:40px;
-}
-.ii a{
-	top:10px;
-}
-.hi{
-	text-align:right;
-}
-.ai{
-	border-radius:5px;
-	height:20px;
-}
-nav{
-	text-align:center;
-	height:50px;
-	line-height:50px;
-	background-color:#c69a39;
-}
-nav>ul{
-	list-style:none;
-	text-align:center;
-}
-nav>ul>li{
-	display:inline-block;
-	position:relative;
-}
-nav>ul>li>a{
-	text-decoration:none;
-	padding:0 39.3px;
-	line-height:50px;
-	display:block;	
-	color:#FFF;
-}
-nav>ul>li>a:hover{
-	color:#CCC;
-}
-nav ul ul{
-	display:none;
-	position:absolute;
-	list-style:none;
-	width:200px;
-	background-color:#FFF;
-}
-nav ul ul a{
-	text-decoration:none;
-	padding:10px 10px;
-	line-height:30px;
-	color:black;	
-	
-}
-nav ul ul li:hover{
-	background-color:#CCC;	
-}
-nav>ul>li:hover>ul{
-	display:block;
-	z-index:1;	
-}
-.hh{
-	color:#999;
-	font-size:15px;
-}
-.ah img{	
-	transition-duration: 0.5s;	
-}
-.ah img:hover{
-	transform:scale(1.1);
-	opacity: 0.7;
-}
-.ha{
-	padding-left:250px;
-	background-color:#fafafa;
-}
-footer{
-	height:40px;
-	line-height:40px;
-	text-align:center;
-}
-#content{
-	width:960px;
-	height:300px;
-}
-#slider{
-	list-style:none;
-	position:relative;
-}
-#slider .slide{
-	opacity:0;
-	position:absolute;
-}
-#slider .showing{
-	opacity: 1;
-}
-h2{
-	color:white;
-	background-color:#c69a39;
-	margin-top:5px;
-	}
-.hihi{
-	text-decoration:none;
-	color:black;
-	}
-</style>
-</head>
+<%-- 
+    Document   : index
+    Created on : Oct 1, 2017, 3:25:37 PM
+    Author     : tylershelter
+--%>
 
-<body>
-    <div id="tibber">
-    	<jsp:include page="header.jsp"></jsp:include>
-        <jsp:include page="nav.jsp"></jsp:include>
-            <div id="content">
-                <ul id="slider">
-                    <li class="slide showing"><img src="img/anh4.png" width="960px" height="300px" /></li>
-                    <li class="slide"><img src="img/anh3.png" width="960px" height="300px" /></li>
-                    <li class="slide"><img src="img/anh2.png" width="960px" height="300px" /></li>
-                    <li class="slide"><img src="img/anh1.png" width="960px" height="300px" /></li>
-                </ul>
-            </div>
-            <script language="javascript">
-            //mảng slides[0,1,2]
-                var slides = document.querySelectorAll('#slider .slide');
-                var count = slides.length;
-                var tam = 0;
-                var timenext = setInterval(nextSlide,2000);
-                
-                function nextSlide(){
-                    slides[tam].className = 'slide';
-                    if(tam == count - 1){
-                        tam = -1;
-                    }
-                    tam = tam + 1;
-                    slides[tam].className = 'slide showing';
-                }
-            </script>
-        <article>
-        <%
-        ProductDAO a = new ProductDAO();
-        List<Product> list1 = a.loadProduct("IP", "lực, ốp");
-        List<Product> list2 = a.loadProduct("IP",",,");
-        List<Product> list3 = a.loadProduct("XI","lực, ốp");
-        List<Product> list4 = a.loadProduct("XI",",,");
-        List<Product> list5 = a.loadProduct("OP","lực, ốp");
-        List<Product> list6 = a.loadProduct("OP",",,");
-        %>
-        <h2>&nbsp;&nbsp;Apple</h2>
-            <table>
-                <tr >
-                	<%for(Product product:list1){ %>
-                	
-                    <th class="ah"><a href=""><img   src="<%=product.getSRC_IMAGE() %>" /></a><%=product.getPRODUCT_NAME() %></th>
-                    <%} %> 
-                </tr>
-                <tr>
-                	<%for(Product product1:list1){ %>
-                    <th style="color:red"><%=product1.getPRICE() %>đ <a href=""><input type="button" value="Mua" /></a></th>
-                    <%} %>
-                </tr>
-                <tr>
-                	<%for(Product product2:list1){ %>
-                    <th class="hh"><%=product2.getDESCRIPTION() %>
-                            </th>
-                    <%} %>
-                </tr>
-                <tr>
-                    <%for(Product product:list2){ %>
-                	
-                    <th class="ah"><a href=""><img   src="<%=product.getSRC_IMAGE() %>" /></a><%=product.getPRODUCT_NAME() %></th>
-                    <%} %> 
-                
-                </tr>
-                <tr>
-                    <%for(Product product1:list2){ %>
-                    <th style="color:red"><%=product1.getPRICE() %>đ <a href=""><input type="button" value="Mua" /></a></th>
-                    <%} %>
-                </tr>
-                <tr>
-                    <%for(Product product2:list2){ %>
-                    <th class="hh"><%=product2.getDESCRIPTION() %>
-                            </th>
-                    <%} %>
-                </tr>
-                </table>
-                
-                <h2>&nbsp;&nbsp;Xiaomi</h2>
-                <table>
-                <tr >
-                	<%for(Product product:list3){ %>
-                	
-                    <th class="ah"><a href=""><img   src="<%=product.getSRC_IMAGE() %>" /></a><%=product.getPRODUCT_NAME() %></th>
-                    <%} %> 
-                </tr>
-                <tr>
-                	<%for(Product product1:list3){ %>
-                    <th style="color:red"><%=product1.getPRICE() %>đ <a href=""><input type="button" value="Mua" /></a></th>
-                    <%} %>
-                </tr>
-                <tr>
-                	<%for(Product product2:list3){ %>
-                    <th class="hh"><%=product2.getDESCRIPTION() %>
-                            </th>
-                    <%} %>
-                </tr>
-                <tr>
-                    <%for(Product product:list4){ %>
-                	
-                    <th class="ah"><a href=""><img   src="<%=product.getSRC_IMAGE() %>" /></a><%=product.getPRODUCT_NAME() %></th>
-                    <%} %> 
-                
-                </tr>
-                <tr>
-                    <%for(Product product1:list4){ %>
-                    <th style="color:red"><%=product1.getPRICE() %>đ <a href=""><input type="button" value="Mua" /></a></th>
-                    <%} %>
-                </tr>
-                <tr>
-                    <%for(Product product2:list4){ %>
-                    <th class="hh"><%=product2.getDESCRIPTION() %>
-                            </th>
-                    <%} %>
-                </tr>
-                </table>
-            <h2>&nbsp;&nbsp;Oppo</h2>
-             <table>
-                <tr >
-                	<%for(Product product:list5){ %>
-                	
-                    <th class="ah"><a href=""><img   src="<%=product.getSRC_IMAGE() %>" /></a><%=product.getPRODUCT_NAME() %></th>
-                    <%} %> 
-                </tr>
-                <tr>
-                	<%for(Product product1:list5){ %>
-                    <th style="color:red"><%=product1.getPRICE() %>đ <a href=""><input type="button" value="Mua" /></a></th>
-                    <%} %>
-                </tr>
-                <tr>
-                	<%for(Product product2:list5){ %>
-                    <th class="hh"><%=product2.getDESCRIPTION() %>
-                            </th>
-                    <%} %>
-                </tr>
-                <tr>
-                    <%for(Product product:list6){ %>
-                	
-                    <th class="ah"><a href=""><img   src="<%=product.getSRC_IMAGE() %>" /></a><%=product.getPRODUCT_NAME() %></th>
-                    <%} %> 
-                
-                </tr>
-                <tr>
-                    <%for(Product product1:list6){ %>
-                    <th style="color:red"><%=product1.getPRICE() %>đ <a href=""><input type="button" value="Mua" /></a></th>
-                    <%} %>
-                </tr>
-                <tr>
-                    <%for(Product product2:list6){ %>
-                    <th class="hh"><%=product2.getDESCRIPTION() %>
-                            </th>
-                    <%} %>
-                </tr>
-                </table>
-        </article>
-    <br />
-        <aside>
-            <div class="ha">
-                <table>
-                    <tr><br />
-                        <th>HỆ THỐNG CỬA HÀNG</th>
-                        <th>QUY ĐỊNH - CHÍNH SÁCH</th>   
-                    </tr>
+<%@page import="java.util.List"%>
+<%@page import="model.Product"%>
+<%@page import="model.Products"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/m1.css">
+        <link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="css/cart.css">
+        <style>
+            .header-content h1{
+                line-height: 90px;
+        }
+
+            .table thead tr th{
+                color: white;
+                text-align: center;
+                font-size: 14px;
+        }
+        
+        .btn-add{
+            border-radius: 5px;
+            padding: 5px 20px;
+            background-color: papayawhip;
+        }
+        
+        .btn-add:hover{
+            background-color: lightseagreen;
+            color: white;
+        }
+
+        </style>
+    </head>
+    <body>
+<!--        Navigator-->
+        <jsp:include page="navbar.jsp" />
+<!--        Header-->
+<div style=" text-align: center;">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d125416.76152587922!2d106.6407764047778!3d10.790329476874076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zYuG6v24geGUgYnXDvXQgcXXhuq1uIDg!5e0!3m2!1svi!2s!4v1508159895986" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+</div>
+<!--End-->
+        <div class="header-content">
+            <h1 class="text-center w3-black">Products</h1>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-center" style="color: black;">
+                <thead>
                     <tr>
-                        <th><b>Hà Nội</b><br />
-                        35 Lê Đức Thọ ,Q.Nam Từ Niêm<br />
-                        Điện thoại:0962.478.150</th>
-                        <th><a  class="hihi" href="baohanh.html">Chính sách bảo hành</a></th>
-                    </tr>
-                    <tr>
-                        <th>471 Lĩnh Nam,Q.Hoàng Mai<br />
-                        Điện thoại:01663.306.489</th>
-                        <th><a class="hihi" href="vanchuyen.html">Chính sách vận chuyển</a></th>
-                    </tr>
-                </table><br />
-            </div>
-        </aside>
-        <footer>&copy;Designer by Double TH-K</footer>
-	</div>
-</body>
+			<th>Mã SP</th>
+			<th>Tên SP</th>
+			<th>Giá</th>
+                        <th>Thêm giỏ hàng</th>
+		</tr>
+                </thead>
+              
+<% 
+        Products listSP = new Products();
+        List<Product> list = listSP.showProduct("");
+        for(Product sp:list){
+            out.print("<form action=\"ControllerCartBean\">");
+            out.print("<tr><td>" + sp.getCode() + "</td><td>"+ sp.getName() + "</td>"+
+                    "<td>"+ sp.getPrice()+ "</td><td><input   class=\"btn-add\" type=\"submit\" "
+                    + " value=\"Add to Cart\" name=\"action\" /></td>"
+                    + "<td><img src='img/"+sp.getImg()+"'width=170px height=100px /></td>"
+                    + "<input type=\"hidden\" name=\"txtCode\" value='"+ sp.getCode()+ "' />"
+                    + "<input type=\"hidden\" name=\"txtName\" value='"+ sp.getName()+ "' />"        
+                    + "<input type=\"hidden\" name=\"txtPrice\" value='"+ sp.getPrice()+ "'/> "
+                    + "<input type=\"hidden\" name=\"img\" value='"+ sp.getImg() + "'/>"
+                      
+                            + "</tr>");
+                    
+            out.print("</form>");
+        }
+%>
+               
+	</table>
+        </div>
+
+        <form action="ControllerCartBean" style="text-align: center; color: black;">
+            <input type ="submit" value="View Cart" name="action" class="btn-primary" style="padding: 5px 28px;"/>
+     </form>
+     <jsp:include page="footer.jsp" />
+    </body>
 </html>
